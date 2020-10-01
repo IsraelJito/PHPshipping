@@ -1,28 +1,43 @@
 <?php 
 
 include_once('header.php');
- 
 // if ($conn == TRUE){
 // 	echo "connection good";
 // }else{
 // 	die('COULD NOT CONECT TO THE DATABASE**');
 // }
+$errors = ""; 
+
 if (isset($_POST['track'])) {
-	$trackid = $_POST['trackid'];
+	$trackid = htmlentities(mysqli_real_escape_string($conn,$_POST['trackid']));
+	$errors = tracks($trackid);
+}
+
+function tracks($trackid) {
+	global $conn, $query, $goodsarray, $no;
+
 	if (empty($trackid)) {
-		echo "Please enter tracking id";
-	}else{
-		$getgoods = "SELECT * FROM tracking deetails WHERE tracking_id = '$trackid'";
-		$query = mysqli_query($conn, $getgoods);
-		$goodsarray = mysqli_fetch_array($query);
-		$no = mysql_num_rows($query);
+		return "<p style = 'color:#ccc; background-color:red; border-radius:10px; max-width: 100%;'>Please Enter a Tracking ID </p>";
 	}
 
+		$getgoods = "SELECT * FROM tracking_details WHERE `tracking_id` = '$trackid'";
+		$query = mysqli_query($conn,$getgoods);
+		$goodsarray = mysqli_fetch_array($query);
+		$no = mysqli_num_rows($query);
+	
 	if ($no == 0) {
-		# code...
-		
+		return "<p style='color:#ccc; background-color:red; border-radius:10px; max-width: 100%;'> Tracking ID does not Exist </p>";
 	}
+
+	if ($no >= 1) {
+		header('location: details.php?tid='.$trackid.'');
+		// echo "<script>window.open('details.php','_SELF')</script>";		
+	}
+
 }
+
+
+
 ?>
 
 
@@ -35,6 +50,14 @@ if (isset($_POST['track'])) {
 						<p>For Personal & Business</p>
 						<h3>Global Logistic Service
 						For Business</h3>
+
+						<?php 
+						if (!empty($errors)){
+							echo $errors;
+						}
+
+						 ?>
+						
 						<form action="" method="post">
 							<input class="form-control" type="search" name="trackid" id="topSearch" placeholder="input tracking id.."><br>
 							<button type="submit" class="btn btn-success" name="track"><i class="fa fa-search" aria-hidden="true">Track</i></button>

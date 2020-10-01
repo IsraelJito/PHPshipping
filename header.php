@@ -1,6 +1,6 @@
 <?php include_once('connect.php') ?>
 
-<!doctype html>
+<!doctype html>	
 <html class="no-js" lang="zxx">
 
 <!-- Mirrored from colorlib.com/preview/theme/logistico/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 10 Feb 2020 12:31:16 GMT -->
@@ -78,7 +78,7 @@
 <div class="main-menu  d-none d-lg-block">
 <nav>
 <ul id="navigation">
-<li><a href="index-2.html">home</a></li>
+<li><a href="index.php">home</a></li>
 <li><a href="service.html">Services</a></li>
 <li><a href="About.html">about</a></li>
 <li><a href="#">pages <i class="ti-angle-down"></i></a>
